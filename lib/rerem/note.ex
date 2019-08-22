@@ -2,8 +2,13 @@ defmodule Rerem.Note do
   alias Rerem.Schema.Note
   alias Rerem.Repo
 
-  def get(id) do
-    find(Note, id)
+  def get(params) do
+    with {:ok, note} <- find(Note, params["id"]),
+         {:ok, note} <- can_view?(note, params) do
+      {:ok, note}
+    else
+      error -> error
+    end
   end
 
   def create(params) do
@@ -14,6 +19,8 @@ defmodule Rerem.Note do
 
   def update(params) do
     with {:ok, note} <- find(Note, params["id"]),
+         {:ok, note} <- can_view?(note, params) do
+         {:ok, note} <- can_edit?(note, params),
          {:ok, note} <-
            note
            |> Note.changeset(params)
@@ -35,5 +42,13 @@ defmodule Rerem.Note do
     else
       _ -> {:error, :not_found}
     end
+  end
+
+  def can_view?(note, params) do
+    Bcrypt.check_pass(note, params["view_password"], hash_key: :view_password_hash)
+  end
+
+  def can_edit?(note, params) do
+    Bcrypt.check_pass(note, params["edit_password"], hash_key: :edit_password_hash)
   end
 end

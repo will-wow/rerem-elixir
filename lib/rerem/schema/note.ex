@@ -7,8 +7,8 @@ defmodule Rerem.Schema.Note do
 
   def changeset(note, attrs \\ %{}) do
     note
-    |> cast(attrs, [:body])
-    |> validate_required([:body])
+    |> cast(attrs, [:body, :view_password_hash, :edit_password_hash])
+    |> validate_required([:body, :view_password_hash, :edit_password_hash])
     |> validate_length(:body, count: :bytes, max: 2000)
   end
 
