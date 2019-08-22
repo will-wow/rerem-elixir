@@ -7,5 +7,9 @@ defmodule ReremWeb.Router do
 
   scope "/api", ReremWeb do
     pipe_through :api
+
+    post "/notes/lookup", NoteController, :lookup
+    post "/notes", NoteController, :create
+    put "/notes", NoteController, :update
   end
 end

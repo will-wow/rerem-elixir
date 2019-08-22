@@ -10,6 +10,9 @@ use Mix.Config
 config :rerem,
   ecto_repos: [Rerem.Repo]
 
+config :rerem, Rerem.Repo,
+  migration_primary_key: [name: :id, type: :binary_id]
+
 # Configures the endpoint
 config :rerem, ReremWeb.Endpoint,
   url: [host: "localhost"],
