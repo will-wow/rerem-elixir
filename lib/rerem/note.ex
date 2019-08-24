@@ -19,7 +19,7 @@ defmodule Rerem.Note do
 
   def update(params) do
     with {:ok, note} <- find(Note, params["id"]),
-         {:ok, note} <- can_view?(note, params) do
+         {:ok, note} <- can_view?(note, params),
          {:ok, note} <- can_edit?(note, params),
          {:ok, note} <-
            note
