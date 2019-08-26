@@ -1,10 +1,13 @@
 defmodule Rerem.Schema.Note do
   use Rerem.Schema
 
+  alias Rerem.Schema.User
+
   schema "notes" do
     field :body, :string
     field :view_key_hash, :string
     field :edit_key_hash, :string
+    has_one :user, User, foreign_key: :directory_id
   end
 
   def changeset(note, attrs \\ %{}) do

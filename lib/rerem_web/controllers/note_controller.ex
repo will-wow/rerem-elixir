@@ -1,11 +1,10 @@
 defmodule ReremWeb.NoteController do
   use ReremWeb, :controller
 
-  alias Rerem.Repo
   alias Rerem.Note
   alias Rerem.Schema.Note, as: Schema
 
-  def lookup(conn, params) do
+  def show(conn, params) do
     case Note.get(params) do
       {:ok, note} ->
         render_json(conn, note)
