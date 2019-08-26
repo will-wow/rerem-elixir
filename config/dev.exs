@@ -24,8 +24,6 @@ config :rerem, ReremWeb.Endpoint,
 
 config :cors_plug,
   origin: ["http://localhost:5000"],
-  max_age: 86400,
-  methods: ["GET", "POST", "PUT", "DELETE"]
 
 # ## SSL Support
 #

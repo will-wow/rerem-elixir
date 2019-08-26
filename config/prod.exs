@@ -39,6 +39,9 @@ config :rerem, ReremWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
   secret_key_base: secret_key_base
 
+config :cors_plug,
+  origin: ["http://localhost:5000", "https://rerem.surge.sh"],
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
