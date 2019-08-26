@@ -40,5 +40,7 @@ defmodule ReremWeb.Endpoint do
     key: "_rerem_key",
     signing_salt: "NL852O0M"
 
+  plug CORSPlug
+
   plug ReremWeb.Router
 end

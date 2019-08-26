@@ -5,8 +5,8 @@ defmodule ReremWeb.NoteController do
   alias Rerem.Note
   alias Rerem.Schema.Note, as: Schema
 
-  def lookup(conn, %{"note" => %{"id" => id}}) do
-    case Note.get(id) do
+  def lookup(conn, params) do
+    case Note.get(params) do
       {:ok, note} ->
         render_json(conn, note)
 
@@ -17,7 +17,7 @@ defmodule ReremWeb.NoteController do
     end
   end
 
-  def create(conn, %{"note" => params}) do
+  def create(conn, params) do
     case Note.create(params) do
       {:ok, note} ->
         conn
@@ -30,7 +30,7 @@ defmodule ReremWeb.NoteController do
     end
   end
 
-  def update(conn, %{"note" => params}) do
+  def update(conn, params) do
     case Note.update(params) do
       {:ok, note} ->
         conn

@@ -45,10 +45,10 @@ defmodule Rerem.Note do
   end
 
   def can_view?(note, params) do
-    Bcrypt.check_pass(note, params["view_password"], hash_key: :view_password_hash)
+    Bcrypt.check_pass(note, params["view_key"], hash_key: :view_key_hash)
   end
 
   def can_edit?(note, params) do
-    Bcrypt.check_pass(note, params["edit_password"], hash_key: :edit_password_hash)
+    Bcrypt.check_pass(note, params["edit_key"], hash_key: :edit_key_hash)
   end
 end

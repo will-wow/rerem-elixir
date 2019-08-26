@@ -3,12 +3,14 @@ defmodule Rerem.Schema.Note do
 
   schema "notes" do
     field :body, :string
+    field :view_key_hash, :string
+    field :edit_key_hash, :string
   end
 
   def changeset(note, attrs \\ %{}) do
     note
-    |> cast(attrs, [:body, :view_password_hash, :edit_password_hash])
-    |> validate_required([:body, :view_password_hash, :edit_password_hash])
+    |> cast(attrs, [:body, :view_key_hash, :edit_key_hash])
+    |> validate_required([:body, :view_key_hash, :edit_key_hash])
     |> validate_length(:body, count: :bytes, max: 2000)
   end
 
