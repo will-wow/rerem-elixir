@@ -1,4 +1,4 @@
-echo "import Config"
+import Config
 
 config :rerem, ReremWeb.Endpoint,
   server: true,

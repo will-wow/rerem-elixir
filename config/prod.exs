@@ -16,13 +16,28 @@ config :rerem, ReremWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+database_url =
+  System.get_env("DATABASE_URL") ||
+    raise """
+    environment variable DATABASE_URL is missing.
+    For example: ecto://USER:PASS@HOST/DATABASE
+    """
 
 config :rerem, Rerem.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  url: {:system, "DATABASE_URL"},
-  database: "",
-  ssl: true,
-  pool_size: 2
+  # ssl: true,
+  url: database_url,
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "2")
+
+secret_key_base =
+  System.get_env("SECRET_KEY_BASE") ||
+    raise """
+    environment variable SECRET_KEY_BASE is missing.
+    You can generate one by calling: mix phx.gen.secret
+    """
+
+config :rerem, ReremWeb.Endpoint,
+  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
+  secret_key_base: secret_key_base
 
 # ## SSL Support
 #
@@ -60,4 +75,3 @@ config :rerem, Rerem.Repo,
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-import_config "prod.secret.exs"
