@@ -23,7 +23,7 @@ config :rerem, ReremWeb.Endpoint,
   watchers: []
 
 config :cors_plug,
-  origin: ["http://localhost:5000"],
+  origin: ["http://localhost:5000"]
 
 # ## SSL Support
 #
