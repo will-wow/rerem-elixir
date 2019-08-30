@@ -40,7 +40,7 @@ config :rerem, ReremWeb.Endpoint,
   secret_key_base: secret_key_base
 
 config :cors_plug,
-  origin: ["http://localhost:5000", "https://rerem.surge.sh"],
+  origin: ["http://localhost:5000", "https://rerem.surge.sh"]
 
 # ## SSL Support
 #
