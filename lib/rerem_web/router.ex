@@ -8,6 +8,6 @@ defmodule ReremWeb.Router do
   scope "/api", ReremWeb do
     pipe_through :api
 
-    resources "/notes", NoteController, only: [:show, :create, :update]
+    resources "/notes", NoteController, only: [:show, :create, :update, :delete]
   end
 end

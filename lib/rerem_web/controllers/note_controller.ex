@@ -42,6 +42,19 @@ defmodule ReremWeb.NoteController do
     end
   end
 
+  def delete(conn, params) do
+    case Note.delete(params) do
+      {:ok, note} ->
+        conn
+        |> render_json(204, note)
+
+      {:error, errors} ->
+        conn
+        |> put_status(400)
+        |> json(%{errors: errors})
+    end
+  end
+
   def render_json(conn, status \\ 200, note) do
     data = Schema.to_json(note)
 

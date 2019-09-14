@@ -41,6 +41,21 @@ defmodule Rerem.Note do
     end
   end
 
+  def delete(params) do
+    with {:ok, note} <- find(Note, params["id"]),
+         {:ok, note} <- can_view?(note, params),
+         {:ok, note} <- can_edit?(note, params),
+         {:ok, note} <- Repo.delete(note) do
+      {:ok, note}
+    else
+      {:error, %Ecto.Changeset{} = changeset} ->
+        changeset.errors
+
+      {:error, error} ->
+        error
+    end
+  end
+
   @spec find(any, any, any) :: {:error, :not_found} | {:ok, any}
   def find(queryable, id, opts \\ []) do
     with {:ok, _} <- Ecto.UUID.cast(id),
