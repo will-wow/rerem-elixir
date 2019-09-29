@@ -22,10 +22,9 @@ defmodule ReremWeb.NoteController do
         conn
         |> render_json(201, note)
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, changeset} ->
         conn
-        |> put_status(404)
-        |> json(changeset.errors)
+        |> render_errors(changeset)
     end
   end
 
@@ -61,5 +60,21 @@ defmodule ReremWeb.NoteController do
     conn
     |> put_status(status)
     |> json(data)
+  end
+
+  def render_errors(conn, %Ecto.Changeset{valid?: false, errors: errors}) do
+    error_data =
+      errors
+      |> Enum.into(%{}, fn {key, {message, _}} ->
+        {key, message}
+      end)
+
+    render_errors(conn, error_data)
+  end
+
+  def render_errors(conn, errors) do
+    conn
+    |> put_status(400)
+    |> json(errors)
   end
 end
