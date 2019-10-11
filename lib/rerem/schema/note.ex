@@ -6,19 +6,16 @@ defmodule Rerem.Schema.Note do
   schema "notes" do
     field :body, :string
     field :iv, :string
-    field :view_key, :string, virtual: true
     field :edit_key, :string, virtual: true
-    field :view_key_hash, :string
     field :edit_key_hash, :string
   end
 
   def changeset(note, attrs \\ %{}) do
     note
-    |> cast(attrs, [:body, :iv, :view_key, :edit_key])
+    |> cast(attrs, [:body, :iv, :edit_key])
     |> validate_length(:body, count: :bytes, max: @one_mb)
-    |> put_pass_hash(:view_key, :view_key_hash)
     |> put_pass_hash(:edit_key, :edit_key_hash)
-    |> validate_required([:body, :iv, :view_key_hash, :edit_key_hash])
+    |> validate_required([:body, :iv, :edit_key_hash])
   end
 
   def to_json(%__MODULE__{id: id, body: body, iv: iv}) do

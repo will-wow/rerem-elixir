@@ -3,8 +3,7 @@ defmodule Rerem.Note do
   alias Rerem.Repo
 
   def get(params) do
-    with {:ok, note} <- find(Note, params["id"]),
-         {:ok, note} <- can_view?(note, params) do
+    with {:ok, note} <- find(Note, params["id"]) do
       {:ok, note}
     else
       error -> error
@@ -25,7 +24,6 @@ defmodule Rerem.Note do
 
   def update(params) do
     with {:ok, note} <- find(Note, params["id"]),
-         {:ok, note} <- can_view?(note, params),
          {:ok, note} <- can_edit?(note, params),
          {:ok, note} <-
            note
@@ -43,7 +41,6 @@ defmodule Rerem.Note do
 
   def delete(params) do
     with {:ok, note} <- find(Note, params["id"]),
-         {:ok, note} <- can_view?(note, params),
          {:ok, note} <- can_edit?(note, params),
          {:ok, note} <- Repo.delete(note) do
       {:ok, note}
@@ -64,10 +61,6 @@ defmodule Rerem.Note do
     else
       _ -> {:error, :not_found}
     end
-  end
-
-  def can_view?(note, params) do
-    Bcrypt.check_pass(note, params["view_key"], hash_key: :view_key_hash)
   end
 
   def can_edit?(note, params) do
