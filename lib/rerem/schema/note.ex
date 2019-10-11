@@ -1,6 +1,8 @@
 defmodule Rerem.Schema.Note do
   use Rerem.Schema
 
+  @one_mb 1024 * 1024
+
   schema "notes" do
     field :body, :string
     field :iv, :string
@@ -13,7 +15,7 @@ defmodule Rerem.Schema.Note do
   def changeset(note, attrs \\ %{}) do
     note
     |> cast(attrs, [:body, :iv, :view_key, :edit_key])
-    |> validate_length(:body, count: :bytes, max: 2000)
+    |> validate_length(:body, count: :bytes, max: @one_mb)
     |> put_pass_hash(:view_key, :view_key_hash)
     |> put_pass_hash(:edit_key, :edit_key_hash)
     |> validate_required([:body, :iv, :view_key_hash, :edit_key_hash])
